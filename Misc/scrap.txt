@@ -1,0 +1,41 @@
+declare hash
+declare array
+
+size methods
+best java practices
+default program java once sure about setup
+
+
+amex contacts , resume
+resume draft
+rover calendar
+update workflow 
+
+[4,3,2,1]
+[9,9,9]
+[9]
+
+//length vs size() flashcards
+
+
+538
+
+      HashSet<Integer> hashedArrSet = new HashSet<>(Arrays.asList(someArray)); 
+
+      // HashSet<Integer> hashSet = new HashSet<Integer>();
+      // List<Integer> listArr = Arrays.stream(ints).boxed().collect(Collectors.toList());
+      // int[] array = listArr.stream().mapToInt(i -> i).toArray();
+      
+int[] array = list.stream().mapToInt(i->i).toArray();
+Thought process:
+
+
+    // LinkedHashSet<Integer> linkedHashSet = new LinkedHashSet<Integer>(Arrays.asList(arr));
+      // Integer[] answer = linkedHashSet.toArray(new Integer[] {});
+      // int[] array = answer.stream().mapToInt(i -> i).toArray();
+
+
+https://stackoverflow.com/questions/960431/how-to-convert-listinteger-to-int-in-java
+simple Stream#toArray returns Object[], so it is not what we want. Also Stream#toArray(IntFunction<A[]> generator) doesn't do what we want because generic type A can't represent primitive int
+so it would be nice to have some stream which could handle primitive type int instead of wrapper Integer, because its toArray method will most likely also return int[] array (returning something else like Object[] or even boxed Integer[] would be unnatural here). And fortunately Java 8 has such stream which is IntStream
+so now only thing we need to figure out is how to convert our Stream<Integer> (which will be returned from list.stream()) to that shiny IntStream. Here Stream#mapToInt(ToIntFunction<? super T> mapper) method comes to a rescue. All we need to do is pass to it mapping from Integer to int. We could use something like Integer#getValue which returns int like
